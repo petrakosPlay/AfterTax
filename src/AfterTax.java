@@ -22,7 +22,7 @@ import javafx.stage.WindowEvent;
 public class AfterTax extends Application {
 
     
-    private static final double INSURANCE_CONTRIBUTION_PERCENTAGE = 0.2229;
+    private static final double INSURANCE_CONTRIBUTION_PERCENTAGE = 0.13867;
    
     public static void main(String[] args) throws Exception {
         launch(args);
@@ -84,6 +84,7 @@ public class AfterTax extends Application {
                     double grossAnnualAmount = Double.parseDouble(amountTextField.getText());
                     double annualInsuranceContributionAmount = caclculateAnnualInsuranceContributions(grossAnnualAmount);
                     double annualTaxableAmount = calculateAnnualTaxableAmount(grossAnnualAmount); 
+                    calculateTax(annualTaxableAmount);
                     messageLabel.setText("The annual insurance contributon amount is: " + String.format("%.2f", annualInsuranceContributionAmount) + "\n" +
                                          "The annual taxable amount is: " + String.format("%.2f", annualTaxableAmount));
                     messageLabel.setFont(new Font(24));
@@ -132,13 +133,17 @@ public class AfterTax extends Application {
     }
 
 
-    /*
-    private double calculateTax (int amount) {
-        //System.out.println("Received " + amount);
+    private void calculateTax (double annualTaxableAmount) {
+        System.out.println("Received " + annualTaxableAmount);
+        
+        //return  (a * (1.0 - INSURANCE_CONTRIBUTION_PERCENTAGE) );
+    }
+        
+}
 
-        return  (amount * (1.0 - INSURANCE_CONTRIBUTION_PERCENTAGE) );
 
-        /*Popup popup = new Popup();
+
+/*Popup popup = new Popup();
         popup.setX(100);
         popup.setY(100);
         popup.getContent().addAll(new Circle(25,25,50, Color.AZURE));
@@ -146,4 +151,3 @@ public class AfterTax extends Application {
         Thread.sleep(5000);
         popup.hide();
     }*/
-}
