@@ -119,8 +119,7 @@ public class AfterTax extends Application {
      * Calculate the amount of money directed towards insurance contributions given the gross (pretax) annual earnings 
     */
     private double caclculateAnnualInsuranceContributions(double grossAnnualAmount) {
-        BigDecimal temp = new BigDecimal(Double.toString(grossAnnualAmount * (1.0 - INSURANCE_CONTRIBUTION_PERCENTAGE)));
-        return (temp.setScale(2, RoundingMode.HALF_UP)).doubleValue();
+        return new BigDecimal(Double.toString(grossAnnualAmount * (1.0 - INSURANCE_CONTRIBUTION_PERCENTAGE))).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
     
     private double calculateAnnualTaxableAmount (double grossAnnualAmount) {
