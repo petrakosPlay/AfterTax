@@ -8,6 +8,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -53,25 +56,39 @@ public class AfterTax extends Application {
         
         TextField amountTextField = new TextField();
         amountTextField.setLayoutX(100);
-        amountTextField.setLayoutY(120);
-        amountTextField.setOnKeyPressed(null);
-        
+        amountTextField.setLayoutY(120);        
 
         Button submitButton = new Button("Submit");
         submitButton.setLayoutX(100);
         submitButton.setLayoutY(150);
+
+
+
+        amountTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent ke) {
+                if(ke.getCode() == KeyCode.ENTER)   submitButton.fire();
+            }    
+        });
+
+        
         submitButton.setOnAction(new EventHandler<ActionEvent>() {
            @Override
            public void handle (ActionEvent event) {
                 try {
                     messageLabel.setText("");
+                    messageLabel.setVisible(false);
                     double grossAnnualAmount = Double.parseDouble(amountTextField.getText());
                     double annualInsuranceContributionAmount = caclculateAnnualInsuranceContributions(grossAnnualAmount);
                     messageLabel.setText("The annual insurance contributon amount is : " + String.format("%.2f", annualInsuranceContributionAmount));
                     messageLabel.setFont(new Font(24));
+                    messageLabel.setTextFill(Color.BLUE);
                     messageLabel.setVisible(true);
                 } catch (NumberFormatException nfe) {
-                    System.out.println("Please try again");
+                    messageLabel.setText("Please provide a decimal value");
+                    messageLabel.setFont(new Font(24));
+                    messageLabel.setTextFill(Color.RED);
+                    messageLabel.setVisible(true);
                 } finally {
                     amountTextField.clear();
                 }              
