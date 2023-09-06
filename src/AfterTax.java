@@ -1,3 +1,6 @@
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -115,15 +118,17 @@ public class AfterTax extends Application {
      * Calculate the amount of money directed towards insurance contributions given the gross (pretax) annual earnings 
     */
     private double caclculateAnnualInsuranceContributions(double grossAnnualAmount) {
-        return grossAnnualAmount * (1.0 - INSURANCE_CONTRIBUTION_PERCENTAGE);
+        BigDecimal temp = new BigDecimal(Double.toString(grossAnnualAmount * (1.0 - INSURANCE_CONTRIBUTION_PERCENTAGE)));
+        return (temp.setScale(2, RoundingMode.HALF_UP)).doubleValue();
     }
     
     private double calculateAnnualTaxableAmount (double grossAnnualAmount) {
-        return grossAnnualAmount - caclculateAnnualInsuranceContributions(grossAnnualAmount);
+        return calculateAnnualTaxableAmount(grossAnnualAmount, caclculateAnnualInsuranceContributions(grossAnnualAmount));
     }
 
     private double calculateAnnualTaxableAmount (double grossAnnualAmount, double annualInsuranceContributionAmount) {
-        return grossAnnualAmount - annualInsuranceContributionAmount;
+        double temp = grossAnnualAmount - annualInsuranceContributionAmount;
+        return new BigDecimal(Double.toString(temp)).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
 
