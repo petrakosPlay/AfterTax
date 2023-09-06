@@ -16,6 +16,8 @@ import javafx.stage.WindowEvent;
 public class AfterTax extends Application {
 
     
+    private static final double INSURANCE_CONTRIBUTION_PERCENTAGE = 0.2229;
+   
     public static void main(String[] args) throws Exception {
         launch(args);
     }
@@ -62,14 +64,14 @@ public class AfterTax extends Application {
            @Override
            public void handle (ActionEvent event) {
                 try {
-                    int amount = Integer.parseInt(amountTextField.getText());
-                    //System.out.println("You have typed '" + amount + "'");
-                    int taxedAmount = calculateTax(amount);
-                    messageLabel.setText("The taxable amount is: " + taxedAmount);
+                    messageLabel.setText("");
+                    double grossAnnualAmount = Double.parseDouble(amountTextField.getText());
+                    double annualInsuranceContributionAmount = caclculateAnnualInsuranceContributions(grossAnnualAmount);
+                    messageLabel.setText("The annual insurance contributon amount is : " + String.format("%.2f", annualInsuranceContributionAmount));
+                    messageLabel.setFont(new Font(24));
                     messageLabel.setVisible(true);
-
                 } catch (NumberFormatException nfe) {
-                    System.out.println("Please try again");                 
+                    System.out.println("Please try again");
                 } finally {
                     amountTextField.clear();
                 }              
@@ -90,17 +92,28 @@ public class AfterTax extends Application {
 
     }
 
-    private int calculateTax (int amount) {
+    /** 
+     * Calculate the amount of money directed towards insurance contributions given the gross (pretax) annual earnings 
+    */
+    private double caclculateAnnualInsuranceContributions(double grossAnnualAmount) {
+        return grossAnnualAmount * (1.0 - INSURANCE_CONTRIBUTION_PERCENTAGE);
+    }
+    
+    
+
+
+    /*
+    private double calculateTax (int amount) {
         //System.out.println("Received " + amount);
-        return (int) (amount * 0.75);
+
+        return  (amount * (1.0 - INSURANCE_CONTRIBUTION_PERCENTAGE) );
+
         /*Popup popup = new Popup();
         popup.setX(100);
         popup.setY(100);
         popup.getContent().addAll(new Circle(25,25,50, Color.AZURE));
         popup.show(s);
         Thread.sleep(5000);
-        popup.hide();*/
-
-    
-    }
+        popup.hide();
+    }*/
 }
