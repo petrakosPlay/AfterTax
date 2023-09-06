@@ -71,7 +71,7 @@ public class AfterTax extends Application {
             }    
         });
 
-        
+
         submitButton.setOnAction(new EventHandler<ActionEvent>() {
            @Override
            public void handle (ActionEvent event) {
@@ -80,7 +80,9 @@ public class AfterTax extends Application {
                     messageLabel.setVisible(false);
                     double grossAnnualAmount = Double.parseDouble(amountTextField.getText());
                     double annualInsuranceContributionAmount = caclculateAnnualInsuranceContributions(grossAnnualAmount);
-                    messageLabel.setText("The annual insurance contributon amount is : " + String.format("%.2f", annualInsuranceContributionAmount));
+                    double annualTaxableAmount = calculateAnnualTaxableAmount(grossAnnualAmount); 
+                    messageLabel.setText("The annual insurance contributon amount is: " + String.format("%.2f", annualInsuranceContributionAmount) + "\n" +
+                                         "The annual taxable amount is: " + String.format("%.2f", annualTaxableAmount));
                     messageLabel.setFont(new Font(24));
                     messageLabel.setTextFill(Color.BLUE);
                     messageLabel.setVisible(true);
@@ -116,7 +118,13 @@ public class AfterTax extends Application {
         return grossAnnualAmount * (1.0 - INSURANCE_CONTRIBUTION_PERCENTAGE);
     }
     
-    
+    private double calculateAnnualTaxableAmount (double grossAnnualAmount) {
+        return grossAnnualAmount - caclculateAnnualInsuranceContributions(grossAnnualAmount);
+    }
+
+    private double calculateAnnualTaxableAmount (double grossAnnualAmount, double annualInsuranceContributionAmount) {
+        return grossAnnualAmount - annualInsuranceContributionAmount;
+    }
 
 
     /*
