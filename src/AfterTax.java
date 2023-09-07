@@ -23,6 +23,7 @@ public class AfterTax extends Application {
 
     
     private static final double INSURANCE_CONTRIBUTION_PERCENTAGE = 0.13867;
+    private static final double MAX_INSURANCE_CONTRIBUTION_AMOUNT = 7126.95;
    
     public static void main(String[] args) throws Exception {
         launch(args);
@@ -119,7 +120,8 @@ public class AfterTax extends Application {
      * Calculate the amount of money directed towards insurance contributions given the gross (pretax) annual earnings 
     */
     private double caclculateAnnualInsuranceContributions(double grossAnnualAmount) {
-        return new BigDecimal(Double.toString(grossAnnualAmount * (1.0 - INSURANCE_CONTRIBUTION_PERCENTAGE))).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        double temp = new BigDecimal(Double.toString(grossAnnualAmount * (1.0 - INSURANCE_CONTRIBUTION_PERCENTAGE))).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        return (temp > MAX_INSURANCE_CONTRIBUTION_AMOUNT) ? MAX_INSURANCE_CONTRIBUTION_AMOUNT : temp;
     }
     
     private double calculateAnnualTaxableAmount (double grossAnnualAmount) {
