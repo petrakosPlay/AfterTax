@@ -25,3 +25,6 @@ replay_pid*
 
 #exclude vscode folder
 .vscode
+
+#exclude vscode/project bin directory
+/bin
