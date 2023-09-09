@@ -24,7 +24,14 @@ public class AfterTax extends Application {
     
     private static final double INSURANCE_CONTRIBUTION_PERCENTAGE = 0.13867;
     private static final double MAX_INSURANCE_CONTRIBUTION_AMOUNT = 7126.95;
-   
+    //private static final double MAX_SCALE_1_TAX_AMOUNT = 10000 * 0.09;
+    //private static final double MAX_SCALE_2_TAX_AMOUNT = 10000 * 0.09;
+    //private static final double MAX_SCALE_3_TAX_AMOUNT = 10000 * 0.09;
+    //private static final double MAX_SCALE_4_TAX_AMOUNT = 10000 * 0.09;
+    private static final double [] taxPercentage= {0.09, 0.22, 0.28, 0.36, 0.44};
+    
+    
+    
     public static void main(String[] args) throws Exception {
         launch(args);
     }
@@ -85,9 +92,11 @@ public class AfterTax extends Application {
                     double grossAnnualAmount = Double.parseDouble(amountTextField.getText());
                     double annualInsuranceContributionAmount = caclculateAnnualInsuranceContributions(grossAnnualAmount);
                     double annualTaxableAmount = calculateAnnualTaxableAmount(grossAnnualAmount); 
-                    calculateTax(annualTaxableAmount);
+                    double annualTax = calculateAnnualTax(annualTaxableAmount);
                     messageLabel.setText("The annual insurance contributon amount is: " + String.format("%.2f", annualInsuranceContributionAmount) + "\n" +
-                                         "The annual taxable amount is: " + String.format("%.2f", annualTaxableAmount));
+                                         "The annual taxable amount is: " + String.format("%.2f", annualTaxableAmount) + "\n" +
+                                         "The annual tax is: " + String.format("%.2f", annualTax) + "\n" +
+                                         "The net income is: " + String.format("%.2f", annualTaxableAmount - annualTax));
                     messageLabel.setFont(new Font(24));
                     messageLabel.setTextFill(Color.BLUE);
                     messageLabel.setVisible(true);
@@ -120,7 +129,8 @@ public class AfterTax extends Application {
      * Calculate the amount of money directed towards insurance contributions given the gross (pretax) annual earnings 
     */
     private double caclculateAnnualInsuranceContributions(double grossAnnualAmount) {
-        double temp = new BigDecimal(Double.toString(grossAnnualAmount * (1.0 - INSURANCE_CONTRIBUTION_PERCENTAGE))).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        double temp = new BigDecimal(Double.toString(grossAnnualAmount * (INSURANCE_CONTRIBUTION_PERCENTAGE))).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        System.out.println("Gross: " + grossAnnualAmount + " temp: " + temp);
         return (temp > MAX_INSURANCE_CONTRIBUTION_AMOUNT) ? MAX_INSURANCE_CONTRIBUTION_AMOUNT : temp;
     }
     
@@ -134,12 +144,24 @@ public class AfterTax extends Application {
     }
 
 
-    private void calculateTax (double annualTaxableAmount) {
-        System.out.println("Received " + annualTaxableAmount);
-        
-        //return  (a * (1.0 - INSURANCE_CONTRIBUTION_PERCENTAGE) );
+    private double calculateAnnualTax (double annualTaxableAmount) {
+        if (annualTaxableAmount < 10000)    return 0.0;
+
+        double remainingAmount = annualTaxableAmount;
+        int taxScale = 0;
+        double taxAmount = 0;
+        while (remainingAmount > 10000.0 && taxScale <=3) {
+            taxAmount += 10000.0 * taxPercentage[taxScale];
+            remainingAmount -= 10000.0;
+            taxScale ++;
+        }
+        taxAmount += remainingAmount * taxPercentage[taxScale];
+        return taxAmount;
+
     }
-        
+
+
+
 }
 
 
