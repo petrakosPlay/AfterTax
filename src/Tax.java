@@ -45,6 +45,8 @@ public class Tax {
         taxAmount += remainingAmount * taxPercentage[taxScale];
         return taxAmount;
 
+        
+
     }
     
 }
