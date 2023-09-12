@@ -32,4 +32,16 @@ public class TaxTests {
         double testAmount = Math.random() * grossAmountThreshold + grossAmountThreshold + 1;
         Assertions.assertEquals(Tax.caclculateAnnualInsuranceContributions(testAmount), MAX_INSURANCE_CONTRIBUTION_AMOUNT);
     }
+
+    @Test
+    public void calculateAnnualTaxableAmountTestScenario1() {
+        Assertions.assertEquals(10000.0, Tax.calculateAnnualTaxableAmount(13000.0, 3000.0));
+    }
+
+    @Test
+    public void calculateAnnualTaxableAmountTestScenario2() {
+        Assertions.assertEquals(23704.8, Tax.calculateAnnualTaxableAmount(26600.123, 2895.328));
+    }
+
+
 }
