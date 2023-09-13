@@ -36,17 +36,23 @@ public class Tax {
 
         double remainingAmount = annualTaxableAmount;
         int taxScale = 0;
-        double taxAmount = 0;
+        double taxAmount = 0.0;
         while (remainingAmount > 10000.0 && taxScale <=3) {
             taxAmount += 10000.0 * taxPercentage[taxScale];
             remainingAmount -= 10000.0;
             taxScale ++;
         }
         taxAmount += remainingAmount * taxPercentage[taxScale];
-        return taxAmount;
 
-        
-
+        return taxAmount - calculateAnnualTaxDiscount(annualTaxableAmount);
     }
-    
+
+
+    public static double calculateAnnualTaxDiscount(double annualTaxableAmount) {
+        return Math.max(0.0, (double) (777 - (20 * ( (int) ((annualTaxableAmount - 12000.0) / 1000))))); 
+    }
+
+public static void main(String[] args) {
+      System.out.println(calculateAnnualTaxDiscount(22911));
+}
 }
