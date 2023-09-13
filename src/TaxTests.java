@@ -43,5 +43,19 @@ public class TaxTests {
         Assertions.assertEquals(23704.8, Tax.calculateAnnualTaxableAmount(26600.123, 2895.328));
     }
 
+    @Test
+    public void calculateAnnualTaxDiscountTestScenario1() {
+        Assertions.assertEquals(577.0, Tax.calculateAnnualTaxDiscount(22911));
+    }
+
+    @Test
+    public void calculateAnnualTaxDiscountTestScenario2() {
+        Assertions.assertEquals(277.0, Tax.calculateAnnualTaxDiscount(37900));
+    }
+
+    @Test
+    public void calculateAnnualTaxDiscountTestScenario3() {
+        Assertions.assertEquals(0.0, Tax.calculateAnnualTaxDiscount(84410));
+    }
 
 }
