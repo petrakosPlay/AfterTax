@@ -1,3 +1,5 @@
+import org.json.JSONObject;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -81,6 +83,7 @@ public class AfterTax extends Application {
                     messageLabel.setFont(new Font(24));
                     messageLabel.setTextFill(Color.BLUE);
                     messageLabel.setVisible(true);
+                    taxPackage(grossAnnualAmount);
                 } catch (NumberFormatException nfe) {
                     messageLabel.setText("Please provide a decimal value");
                     messageLabel.setFont(new Font(24));
@@ -109,4 +112,18 @@ public class AfterTax extends Application {
         stage.show();
 
     }
+
+
+    private static JSONObject taxPackage(double grossAnnualAmount) {        
+        JSONObject jo = new JSONObject();
+        jo.put("annualInsuranceContributionAmount", Tax.caclculateAnnualInsuranceContributions(grossAnnualAmount));
+        jo.put("grossAnnualAmount", Tax.calculateAnnualTaxableAmount(grossAnnualAmount));
+        jo.put("annualTax", Tax.calculateAnnualTax(grossAnnualAmount));
+        return jo;
+    }
+
+
 }
+
+
+
