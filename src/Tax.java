@@ -4,8 +4,13 @@ import java.math.RoundingMode;
 public class Tax {
 
 
-    private static final double INSURANCE_CONTRIBUTION_PERCENTAGE = 0.13867;
-    private static final double MAX_INSURANCE_CONTRIBUTION_AMOUNT = 7126.95;
+    private static final double INSURANCE_CONTRIBUTION_PERCENTAGE = initializeInsuranceContributionPercentage();
+    private static final double MAX_INSURANCE_CONTRIBUTION_AMOUNT = initializeMaxInsuranceContributionAmount();
+
+    private static double initializeMaxInsuranceContributionAmount() { return 7126.95; }
+    private static double initializeInsuranceContributionPercentage() { return 0.13867; }
+    
+
     //private static final double MAX_SCALE_1_TAX_AMOUNT = 10000 * 0.09;
     //private static final double MAX_SCALE_2_TAX_AMOUNT = 10000 * 0.09;
     //private static final double MAX_SCALE_3_TAX_AMOUNT = 10000 * 0.09;
@@ -52,7 +57,8 @@ public class Tax {
         return Math.max(0.0, (double) (777 - (20 * ( (int) ((annualTaxableAmount - 12000.0) / 1000))))); 
     }
 
-public static void main(String[] args) {
-      System.out.println(calculateAnnualTaxDiscount(22911));
-}
+    public static void main(String[] args) {
+        System.out.println(MAX_INSURANCE_CONTRIBUTION_AMOUNT);
+        System.out.println(INSURANCE_CONTRIBUTION_PERCENTAGE);
+    }
 }
