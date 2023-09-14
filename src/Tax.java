@@ -44,7 +44,7 @@ public class Tax {
         }
         taxAmount += remainingAmount * taxPercentage[taxScale];
 
-        return taxAmount - calculateAnnualTaxDiscount(annualTaxableAmount);
+        return new BigDecimal(Double.toString(taxAmount - calculateAnnualTaxDiscount(annualTaxableAmount))).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
 
