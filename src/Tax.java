@@ -36,7 +36,12 @@ public class Tax {
     }
 
 
-    public static double calculateAnnualTax (double annualTaxableAmount) {
+    public static double calculateAnnualTax (double grossAnnualAmount) {
+        return calculateAnnualTax2(calculateAnnualTaxableAmount (grossAnnualAmount));
+    }
+
+
+    public static double calculateAnnualTax2 (double annualTaxableAmount) {
         if (annualTaxableAmount < 10000)    return 0.0;
 
         double remainingAmount = annualTaxableAmount;
