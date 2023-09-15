@@ -73,9 +73,15 @@ public class AfterTax extends Application {
                     messageLabel.setText("");
                     messageLabel.setVisible(false);
                     double grossAnnualAmount = Double.parseDouble(amountTextField.getText());
-                    double annualInsuranceContributionAmount = Tax.caclculateAnnualInsuranceContributions(grossAnnualAmount);
-                    double annualTaxableAmount = Tax.calculateAnnualTaxableAmount(grossAnnualAmount); 
-                    double annualTax = Tax.calculateAnnualTax(annualTaxableAmount);
+                    JSONObject jo = taxPackage(grossAnnualAmount);
+                    double annualInsuranceContributionAmount = (double) jo.get("annualInsuranceContributionAmount");
+                    double annualTaxableAmount = (double) jo.get("annualTaxableAmount");
+                    double annualTax = (double) jo.get("annualTax");
+
+                    //double annualInsuranceContributionAmount = Tax.caclculateAnnualInsuranceContributions(grossAnnualAmount);
+                    //double annualTaxableAmount = Tax.calculateAnnualTaxableAmount(grossAnnualAmount); 
+                    //double annualTax = Tax.calculateAnnualTax(annualTaxableAmount);
+                    
                     messageLabel.setText("The annual insurance contributon amount is: " + String.format("%.2f", annualInsuranceContributionAmount) + "\n" +
                                          "The annual taxable amount is: " + String.format("%.2f", annualTaxableAmount) + "\n" +
                                          "The annual tax is: " + String.format("%.2f", annualTax) + "\n" +
@@ -83,7 +89,7 @@ public class AfterTax extends Application {
                     messageLabel.setFont(new Font(24));
                     messageLabel.setTextFill(Color.BLUE);
                     messageLabel.setVisible(true);
-                    taxPackage(grossAnnualAmount);
+
                 } catch (NumberFormatException nfe) {
                     messageLabel.setText("Please provide a decimal value");
                     messageLabel.setFont(new Font(24));
@@ -117,7 +123,7 @@ public class AfterTax extends Application {
     private static JSONObject taxPackage(double grossAnnualAmount) {        
         JSONObject jo = new JSONObject();
         jo.put("annualInsuranceContributionAmount", Tax.caclculateAnnualInsuranceContributions(grossAnnualAmount));
-        jo.put("grossAnnualAmount", Tax.calculateAnnualTaxableAmount(grossAnnualAmount));
+        jo.put("annualTaxableAmount", Tax.calculateAnnualTaxableAmount(grossAnnualAmount));
         jo.put("annualTax", Tax.calculateAnnualTax(grossAnnualAmount));
         return jo;
     }
