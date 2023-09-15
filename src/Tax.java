@@ -7,8 +7,8 @@ public class Tax {
     private static final double INSURANCE_CONTRIBUTION_PERCENTAGE = initializeInsuranceContributionPercentage();
     private static final double MAX_INSURANCE_CONTRIBUTION_AMOUNT = initializeMaxInsuranceContributionAmount();
 
-    private static double initializeMaxInsuranceContributionAmount() { return 7126.95; }
     private static double initializeInsuranceContributionPercentage() { return 0.13867; }
+    private static double initializeMaxInsuranceContributionAmount() { return 13836.1; }
     
 
     //private static final double MAX_SCALE_1_TAX_AMOUNT = 10000 * 0.09;

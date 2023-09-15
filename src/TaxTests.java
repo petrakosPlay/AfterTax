@@ -61,18 +61,18 @@ public class TaxTests {
 
     @Test
     public void calculateAnnualTaxTestScenario1() {
-        Assertions.assertEquals(Tax.calculateAnnualTax(22911),  3338.08);
+        Assertions.assertEquals(Tax.calculateAnnualTax(26600.0),  3338.19);
     }    
 
     @Test
     public void calculateAnnualTaxTestScenario2() {
-        Assertions.assertEquals(Tax.calculateAnnualTax(43061),  10689.84);
+        Assertions.assertEquals(Tax.calculateAnnualTax(40000.0),  7166.15);
     }
 
 
     @Test
     public void calculateAnnualTaxTestScenario3() {
-        Assertions.assertEquals(Tax.calculateAnnualTax(86166),  29813.04);
+        Assertions.assertEquals(Tax.calculateAnnualTax(90000.0),  26008.67);
     }
 
 
