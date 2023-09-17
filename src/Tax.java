@@ -22,7 +22,6 @@ public class Tax {
     */
     public static double caclculateAnnualInsuranceContributions(double grossAnnualAmount) {
         double temp = new BigDecimal(Double.toString(grossAnnualAmount * (INSURANCE_CONTRIBUTION_PERCENTAGE))).setScale(2, RoundingMode.HALF_UP).doubleValue();
-        System.out.println("Gross: " + grossAnnualAmount + " temp: " + temp);
         return (temp > MAX_INSURANCE_CONTRIBUTION_AMOUNT) ? MAX_INSURANCE_CONTRIBUTION_AMOUNT : temp;
     }
     
