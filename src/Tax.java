@@ -1,5 +1,10 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Tax {
 
@@ -7,9 +12,49 @@ public class Tax {
     private static final double INSURANCE_CONTRIBUTION_PERCENTAGE = initializeInsuranceContributionPercentage();
     private static final double MAX_INSURANCE_CONTRIBUTION_AMOUNT = initializeMaxInsuranceContributionAmount();
 
-    private static double initializeInsuranceContributionPercentage() { return 0.13867; }
-    private static double initializeMaxInsuranceContributionAmount() { return 13836.1; }
-    
+
+    //private static double initializeInsuranceContributionPercentage() { return 0.13867; }
+    private static double initializeInsuranceContributionPercentage() {
+        final String url = "jdbc:postgresql://localhost/aftertax";
+        final String user = "aftertax";
+        final String password = "aftertax";
+        try {
+            Connection connection = DriverManager.getConnection(url, user, password);
+            System.out.println("Connected to the PostgreSQL server successfully.");
+            Statement statement = connection.createStatement();
+            String selectRecords = "SELECT VALUE FROM PARAMETERS WHERE CODE = 'INSUR_CONTR_PERC'";
+            ResultSet resultSet = statement.executeQuery(selectRecords);
+            resultSet.next();
+            //resultSet.close();
+            //connection.close();
+            return resultSet.getDouble("VALUE");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return -1.0;
+        }
+    }    
+
+    //private static double initializeMaxInsuranceContributionAmount() { return 13836.1; }
+    private static double initializeMaxInsuranceContributionAmount() {
+        final String url = "jdbc:postgresql://localhost/aftertax";
+        final String user = "aftertax";
+        final String password = "aftertax";
+        try {
+            Connection connection = DriverManager.getConnection(url, user, password);
+            System.out.println("Connected to the PostgreSQL server successfully.");
+            Statement statement = connection.createStatement();
+            String selectRecords = "SELECT VALUE FROM PARAMETERS WHERE CODE = 'MAX_INSUR_CONTR_AMT'";
+            ResultSet resultSet = statement.executeQuery(selectRecords);
+            resultSet.next();
+            //resultSet.close();
+            //connection.close();
+            return resultSet.getDouble("VALUE");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return -1.0;
+        }
+    }    
+
 
     //private static final double MAX_SCALE_1_TAX_AMOUNT = 10000 * 0.09;
     //private static final double MAX_SCALE_2_TAX_AMOUNT = 10000 * 0.09;
@@ -61,8 +106,10 @@ public class Tax {
         return Math.max(0.0, (double) (777 - (20 * ( (int) ((annualTaxableAmount - 12000.0) / 1000))))); 
     }
 
+    /*
     public static void main(String[] args) {
         System.out.println(MAX_INSURANCE_CONTRIBUTION_AMOUNT);
         System.out.println(INSURANCE_CONTRIBUTION_PERCENTAGE);
     }
+    */
 }
