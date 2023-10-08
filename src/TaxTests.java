@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Assertions;
 
 public class TaxTests {
     
-    private static final double MAX_INSURANCE_CONTRIBUTION_AMOUNT = 7126.95;
+    private static final double MAX_INSURANCE_CONTRIBUTION_AMOUNT = 13836.1;
     private static final double INSURANCE_CONTRIBUTION_PERCENTAGE = 0.13867;
     private static final double MIN_GROSS_AMT = 100.0;
     double grossAmountThreshold = new BigDecimal(Double.toString(MAX_INSURANCE_CONTRIBUTION_AMOUNT / INSURANCE_CONTRIBUTION_PERCENTAGE)).setScale(2, RoundingMode.HALF_UP).doubleValue();
