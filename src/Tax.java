@@ -106,10 +106,12 @@ public class Tax {
         return Math.max(0.0, (double) (777 - (20 * ( (int) ((annualTaxableAmount - 12000.0) / 1000))))); 
     }
 
-    
     public static void main(String[] args) {
         System.out.println(MAX_INSURANCE_CONTRIBUTION_AMOUNT);
         System.out.println(INSURANCE_CONTRIBUTION_PERCENTAGE);
     }
+<<<<<<< HEAD
     
+=======
+>>>>>>> 9cc974af421f226ddc97c4422abb6a45bd6cd553
 }
